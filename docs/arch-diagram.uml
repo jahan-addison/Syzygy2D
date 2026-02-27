@@ -1,0 +1,90 @@
+@startuml
+skinparam monochrome true
+skinparam ranksep 50
+skinparam nodesep 40
+
+title Syzygy2D: ESP32-S3-EYE 2D Graphics Engine
+
+' --- Root ---
+node HAL [
+  <b>Hardware Abstraction Layer</b>
+  --
+  * GPIO/SPI Pin Mapping
+  * PSRAM Initialization
+  * I2C Bus Setup
+]
+
+' --- Branch A: Memory & Assets ---
+node VFS [
+  <b>Data & Storage</b>
+  --
+  * Partition Table Setup
+  * LittleFS/SPIFFS Mount
+]
+
+node AssetLoader [
+  <b>Asset Pipeline</b>
+  --
+  * RGB565 Parser
+  * Flash-to-PSRAM Streaming
+]
+
+node MemManager [
+  <b>Memory Manager</b>
+  --
+  * PSRAM Pool Allocator
+  * Entity Data Structures
+]
+
+' --- Branch B: I/O & Drivers ---
+node SPIDriver [
+  <b>GFX Driver</b>
+  --
+  * SPI Master Config
+  * DMA Descriptor Chain
+]
+
+node InputMgr [
+  <b>Input Manager</b>
+  --
+  * Button ISRs
+  * Atomic Input Buffer
+]
+
+' --- Convergence ---
+node Compositor [
+  <b>Compositor (The Blitter)</b>
+  --
+  * Dirty Rectangle Logic
+  * Xtensa LX7 Vector Opts
+]
+
+node DoubleBuffer [
+  <b>Sync Engine</b>
+  --
+  * Semaphore-locked Swapping
+  * Frame Timing (esp_timer)
+]
+
+node GameLoop [
+  <b>Application Layer</b>
+  --
+  * Fixed Timestep Physics
+  * Render Command Buffer
+]
+
+' --- Dependencies (DAG Edges) ---
+HAL --> VFS
+HAL --> SPIDriver
+
+VFS --> AssetLoader
+AssetLoader --> MemManager
+
+SPIDriver --> InputMgr
+InputMgr --> Compositor
+
+MemManager --> Compositor
+Compositor --> DoubleBuffer
+DoubleBuffer --> GameLoop
+
+@enduml
