@@ -1,0 +1,10 @@
+idf_component_register(
+    SRCS
+        "psram.cc"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        esp_psram
+        log
+        driver
+)

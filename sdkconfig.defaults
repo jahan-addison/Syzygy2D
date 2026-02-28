@@ -1,0 +1,38 @@
+# =============================================================================
+#  sdkconfig.defaults — Syzygy2D ESP32-S3-EYE
+#
+#  Applied automatically by `idf.py build` before sdkconfig is generated.
+#  Commit this file; do NOT commit sdkconfig (add to .gitignore).
+# =============================================================================
+
+# Target
+CONFIG_IDF_TARGET="esp32s3"
+
+# ── Flash ────────────────────────────────────────────────────────────────────
+CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+
+# ── Octal PSRAM (ESP32-S3R8 — 8 MB OPI PSRAM bonded on-package) ─────────────
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y            # Octal (8-bit) mode — required for S3R8
+CONFIG_SPIRAM_SPEED_80M=y           # 80 MHz PSRAM clock
+CONFIG_SPIRAM_BOOT_INIT=y           # Initialise PSRAM during IDF boot sequence
+CONFIG_SPIRAM_IGNORE_NOTFOUND=n     # Hard-fail if PSRAM is missing
+CONFIG_SPIRAM_USE_MALLOC=y          # Include SPIRAM in heap_caps_malloc pool
+CONFIG_SPIRAM_ALLOW_STACK_EXTERNAL_MEMORY=n  # Keep task stacks in internal SRAM
+
+# ── CPU ──────────────────────────────────────────────────────────────────────
+CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240=y   # Run both cores at 240 MHz
+
+# ── FreeRTOS ─────────────────────────────────────────────────────────────────
+CONFIG_FREERTOS_HZ=1000             # 1 ms tick (needed for fine-grained timing)
+CONFIG_FREERTOS_UNICORE=n           # Dual-core enabled
+
+# ── Compiler ─────────────────────────────────────────────────────────────────
+CONFIG_COMPILER_OPTIMIZATION_PERF=y # -O2
+CONFIG_COMPILER_CXX_EXCEPTIONS=y    # Enable C++ exceptions
+CONFIG_COMPILER_CXX_RTTI=n          # Disable RTTI (saves ~20 KB)
+
+# ── Logging ──────────────────────────────────────────────────────────────────
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y

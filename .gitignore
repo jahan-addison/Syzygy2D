@@ -1,2 +1,16 @@
-build
-cpm_modules
+# ESP-IDF build output
+build/
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# Old CMake artefacts
+cpm_modules/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# macOS
+.DS_Store

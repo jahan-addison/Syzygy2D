@@ -13,7 +13,7 @@
 
 ### Roadmap
 
-- [ ] **Step 1: Foundation (The Root)**
+- [x] **Step 1: Foundation (The Root)**
     - Hardware pin mappings for ST7789 LCD and 6-button matrix
     - Configure Octal PSRAM and verify heap allocation
 
@@ -39,16 +39,49 @@
 
 ## Build
 
-```bash
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER="Address;Undefined" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIWYU=ON
-cmake --build build
-```
+### Prerequisites
 
-Run the test suite:
+#### MacOS
 
 ```bash
-./build/test_suite
+# macOS — install toolchain dependencies
+brew install cmake ninja dfu-util
+
+# Clone and install ESP-IDF v5.4.1
+mkdir -p ~/esp && cd ~/esp
+git clone --depth 1 --branch v5.4.1 --recursive \
+    https://github.com/espressif/esp-idf.git esp-idf
+~/esp/esp-idf/install.sh esp32s3
+
+# Add to ~/.zshrc (or source manually each session):
+# . ~/esp/esp-idf/export.sh
 ```
+
+### Configure & Build
+
+```bash
+# Source the IDF environment (once per shell session)
+
+# Set target (only needed once; writes into sdkconfig)
+idf.py set-target esp32s3
+
+# Build
+idf.py build
+```
+
+### Flash & Monitor
+
+```bash
+idf.py -p /dev/tty.usbmodem* flash monitor
+```
+
+Press `Ctrl-]` to exit the monitor.
+
+### VS Code
+
+Open the project in VS Code with the **ESP-IDF** extension installed.
+Use **ESP-IDF: Build your project** (`Ctrl+E B`) to build, and
+**ESP-IDF: Flash your project** (`Ctrl+E F`) to flash.
 
 
 ## License

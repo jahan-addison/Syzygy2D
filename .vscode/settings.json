@@ -1,4 +1,20 @@
 {
-  "C_Cpp.errorSquiggles": "enabled",
-  "C_Cpp.default.compilerPath": "/usr/bin/c++"
+    "idf.espIdfPath": "${env:HOME}/esp/esp-idf",
+    "idf.toolsPath": "${env:HOME}/.espressif",
+    "idf.customExtraPaths": "",
+    "idf.customExtraVars": "",
+    "idf.adapterTargetName": "esp32s3",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ],
+    "idf.flashType": "UART",
+    "idf.portWin": "COM3",
+    "idf.port": "/dev/tty.usbmodem*",
+    "idf.buildPath": "${workspaceFolder}/build",
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "C_Cpp.intelliSenseEngine": "default"
 }
